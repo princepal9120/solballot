@@ -1,4 +1,7 @@
 use anchor_lang::prelude::*;
+mod state;
+mod contexts;
+
 
 declare_id!("2qJNqNuE7bXTJkJsRqtEPabpFi9W88ZKVjqESod15ymm");
 
@@ -6,11 +9,9 @@ declare_id!("2qJNqNuE7bXTJkJsRqtEPabpFi9W88ZKVjqESod15ymm");
 pub mod solballot {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        msg!("Greetings from: {:?}", ctx.program_id);
+    pub fn initialize_treasury(ctx: Context<InitializeTreasury>) -> Result<()> {
         Ok(())
     }
 }
 
-#[derive(Accounts)]
-pub struct Initialize {}
+
