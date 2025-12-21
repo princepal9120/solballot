@@ -21,6 +21,13 @@ pub mod solballot {
         
         Ok(())
     }
+    pub fn buy_tokens(ctx: Context<BuyTokens>, ) -> Result<()> {
+        //1. User will transfer SOL to the sol_vault
+        //2. token transfer to the treasury_token_account to buyer token account
+        //3. X mint token
+        //4. trasury config accout, to context for the sol price and token ammout transfer 
+        Ok(())
+    }
 }
 
 

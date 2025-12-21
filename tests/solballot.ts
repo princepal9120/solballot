@@ -34,6 +34,7 @@ describe("solballot", () => {
 
   beforeEach(() =>{
     treasuryConfigPda = findPda(program.programId, [anchor.utils.bytes.utf8.encode(SEEDS.TREASURY_CONFIG)]);
+    expect(treasuryConfigPda).to.be.ok;
     xMintPda = findPda(program.programId, [anchor.utils.bytes.utf8.encode(SEEDS.X_MINT)]);
     solVaultPda = findPda(program.programId, [anchor.utils.bytes.utf8.encode(SEEDS.SOL_VAULT)]);
     mintAuthorityPda = findPda(program.programId, [anchor.utils.bytes.utf8.encode(SEEDS.MINT_AUTHORITY)]);
@@ -44,12 +45,20 @@ describe("solballot", () => {
     // Add your test here.
     const solPrice =  new anchor.BN(100_000_000);
     const tokensPerPurchase =new anchor.BN(100_000_000);
+
+    console.log("Treasury config Pda", treasuryConfigPda);
     const tx = await program.methods.initializeTreasury(solPrice,tokensPerPurchase).accounts({
       authority:adminWallet.publicKey,
 
 
     }).rpc();
     console.log("Your transaction signature", tx);
+    const treasuryConfigAccount= await program.account.treasuryConfig.fetch(treasuryConfigPda);
+    expect(treasuryConfigAccount.authority.toBase58()).to.equal(adminWallet.publicKey.toBase58());
+    expect(treasuryConfigAccount.xMint.toBase58()).to.equal(xMintPda.toBase58());
+    expect(treasuryConfigAccount.solPrice.toNumber()).to.equal(solPrice.toNumber());
+    expect(treasuryConfigAccount.tokensPerPurchase.toNumber()).to.equal(tokensPerPurchase.toNumber());
+    console.log("Treasury Config Account", treasuryConfigAccount);
   });
 });
  
