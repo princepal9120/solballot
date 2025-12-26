@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { ProgramProps } from '@/types';
 import { Vote as VoteIcon, Hash } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const Vote = ({ walletAddress, idlWithAddress, getProvider }: ProgramProps) => {
     const [proposalId, setProposalId] = useState('');
@@ -72,19 +73,20 @@ const Vote = ({ walletAddress, idlWithAddress, getProvider }: ProgramProps) => {
                 .accounts({
                     voterAccount: voterPda,
                     xMint: xMintPda,
-                    voterTokenAccount: voterTokenAccount,
-                    treasuryTokenAccount: treasuryTokenAccount,
-                    proposalAccount: proposalPda,
+                    treasuryTokenAccount: treasuryConfig.treasuryTokenAccount,
+                    // userTokenAccount replaced voterTokenAccount, ensuring no dups if any
                     authority: provider.wallet.publicKey,
                     tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+                    systemProgram: anchor.web3.SystemProgram.programId, // New account
                 } as any)
                 .rpc();
 
-            alert("Vote Cast Successfully!");
+            toast.success("Vote Cast Successfully!");
+            setProposalId(''); // Added this line
             setAmount('');
         } catch (error: any) {
-            console.error("Error casting vote:", error);
-            alert("Failed to cast vote: " + error.message);
+            console.error("Error voting:", error); // Changed error message
+            toast.error("Vote failed: " + error.message); // Changed alert to toast.error
         } finally {
             setIsLoading(false);
         }

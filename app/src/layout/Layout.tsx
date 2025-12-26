@@ -1,11 +1,12 @@
 import React, { ReactNode } from 'react';
-import { Wallet, LayoutDashboard, Settings, Vote } from 'lucide-react';
+import { LayoutDashboard, Wallet, Settings, Vote, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { Toaster } from 'react-hot-toast';
 
 interface LayoutProps {
     children: ReactNode;
-    currentPage: 'user' | 'admin' | 'settings';
-    setCurrentPage: (page: 'user' | 'admin' | 'settings') => void;
+    currentPage: 'user' | 'admin' | 'settings' | 'proposals';
+    setCurrentPage: (page: 'user' | 'admin' | 'settings' | 'proposals') => void;
     walletAddress: string | null;
     connectWallet: () => void;
     isLoadingWallet: boolean;
@@ -21,6 +22,28 @@ export const Layout: React.FC<LayoutProps> = ({
 }) => {
     return (
         <div className="min-h-screen flex flex-col md:flex-row max-w-[1400px] mx-auto">
+            <Toaster 
+                position="bottom-right"
+                toastOptions={{
+                    style: {
+                        background: '#1e293b',
+                        color: '#fff',
+                        border: '1px solid #334155',
+                    },
+                    success: {
+                        iconTheme: {
+                            primary: '#14b8a6', // protocol-teal
+                            secondary: '#fff',
+                        },
+                    },
+                    error: {
+                        iconTheme: {
+                            primary: '#ef4444', // red-500
+                            secondary: '#fff',
+                        },
+                    },
+                }}
+            />
             {/* Sidebar Navigation */}
             <aside className="w-full md:w-64 p-6 flex flex-col gap-8 border-r border-slate-800 bg-slate-900/50">
                 <div className="flex items-center gap-3">
@@ -39,7 +62,15 @@ export const Layout: React.FC<LayoutProps> = ({
                         onClick={() => setCurrentPage('user')}
                     >
                         <LayoutDashboard className="mr-2 w-4 h-4" />
-                        Voting Dashboard
+                        Dashboard
+                    </Button>
+                    <Button
+                        variant={currentPage === 'proposals' ? 'primary' : 'ghost'}
+                        className="w-full justify-start"
+                        onClick={() => setCurrentPage('proposals')}
+                    >
+                        <FileText className="mr-2 w-4 h-4" />
+                        Proposals
                     </Button>
                     <Button
                         variant={currentPage === 'admin' ? 'primary' : 'ghost'}

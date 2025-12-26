@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { ProgramProps } from '@/types';
 import { FileText, Calendar, Coins } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const RegisterProposal = ({ walletAddress, idlWithAddress, getProvider }: ProgramProps) => {
     const [proposalDescription, setProposalDescription] = useState('');
@@ -97,13 +98,36 @@ const RegisterProposal = ({ walletAddress, idlWithAddress, getProvider }: Progra
                 } as any)
                 .rpc();
 
-            alert("Proposal Registered! ID: " + currentCount.toString());
+            toast.success("Proposal Registered! ID: " + currentCount.toString());
+            setProposalDescription('');
+            setDeadline('');
+            setStakeAmount('');
+
+            await program.methods.registerProposal(
+                proposalDescription,
+                new anchor.BN(deadlineTimestamp),
+                new anchor.BN(stakeRaw)
+            )
+                .accounts({
+                    proposalAccount: proposalPda,
+                    proposalCounter: proposalCounterPda,
+                    treasuryConfig: treasuryConfigPda,
+                    xMint: xMintPda,
+                    userTokenAccount: userTokenAccount,
+                    treasuryTokenAccount: treasuryConfig.treasuryTokenAccount,
+                    authority: provider.wallet.publicKey,
+                    tokenProgram: anchor.utils.token.TOKEN_PROGRAM_ID,
+                    systemProgram: anchor.web3.SystemProgram.programId,
+                } as any)
+                .rpc();
+
+            toast.success("Proposal Registered! ID: " + currentCount.toString());
             setProposalDescription('');
             setDeadline('');
             setStakeAmount('');
         } catch (error: any) {
             console.error("Error registering proposal:", error);
-            alert("Failed to register proposal: " + error.message);
+            toast.error("Failed to register proposal: " + error.message);
         } finally {
             setIsLoading(false);
         }

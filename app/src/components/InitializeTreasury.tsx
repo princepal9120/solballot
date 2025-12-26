@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { ProgramProps } from '@/types';
 import { Banknote, Coins } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const InitializeTreasury = ({ walletAddress, idlWithAddress, getProvider }: ProgramProps) => {
     const [solPrice, setSolPrice] = useState('');
@@ -83,10 +84,10 @@ const InitializeTreasury = ({ walletAddress, idlWithAddress, getProvider }: Prog
                 } as any) // Type casting for now to avoid IDL type issues
                 .rpc();
 
-            alert("Treasury Initialized!");
+            toast.success("Treasury Initialized!");
         } catch (error: any) {
             console.error("Error initializing treasury:", error);
-            alert("Failed to initialize treasury: " + error.message);
+            toast.error("Failed to initialize treasury: " + error.message);
         } finally {
             setIsLoading(false);
         }

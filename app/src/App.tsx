@@ -4,6 +4,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import * as anchor from "@coral-xyz/anchor";
 import { Layout } from './layout/Layout';
 import { Card } from './components/ui/Card';
+import { Button } from './components/ui/Button';
 
 // Component Imports (We will migrate these next, so suppressing errors for now if they are still JSX)
 // @ts-ignore
@@ -62,7 +63,7 @@ function App() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<'user' | 'admin' | 'settings'>('user');
+  const [currentPage, setCurrentPage] = useState<'user' | 'admin' | 'settings' | 'proposals'>('user');
 
   // Connect Wallet
   const connectWallet = async () => {
@@ -110,36 +111,58 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <TokenBalance {...sharedPropsWithConn} />
             <VoterInfo {...sharedProps} />
-            <Card className="flex flex-col justify-between">
-              <h3 className="text-gray-400 font-medium text-sm">Quick Actions</h3>
-              <div className="flex-1 flex flex-col justify-center gap-2">
-                <RegisterVoter {...sharedProps} />
+            <Card className="flex flex-col justify-between border-slate-800 bg-slate-900/50">
+              <div className="flex flex-col gap-2">
+                <h3 className="text-gray-400 font-medium text-sm">Action Center</h3>
+                <p className="text-xs text-slate-500">Quickly access key actions</p>
+              </div>
+              <div className="flex-1 flex flex-col justify-end gap-2 mt-4">
+                <Button size="sm" onClick={() => setCurrentPage('proposals')} className="w-full bg-slate-800 hover:bg-slate-700">
+                  View Proposals
+                </Button>
               </div>
             </Card>
           </div>
 
-          {/* Middle Row: Proposals & Buying */}
+          {/* Main Content: Buying & Voting */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* All Proposals - Takes up 2 columns */}
-            <div className="lg:col-span-2 h-full">
-              <AllProposals {...sharedProps} />
+            {/* Vote & Lookup column */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="flex flex-col space-y-2 mb-2">
+                <h2 className="text-2xl font-bold text-white tracking-tight">Cast Your Vote</h2>
+                <p className="text-slate-400 text-sm">Enter a Proposal ID to cast your vote directly.</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Vote {...sharedProps} />
+                <ProposalInfo {...sharedProps} />
+              </div>
             </div>
+
             {/* Buy Tokens side panel */}
             <div className="h-full">
               <BuyTokens {...sharedPropsWithConn} />
             </div>
           </div>
+        </div>
+      )}
 
-          {/* Bottom Grid: Actions & Management */}
+      {currentPage === 'proposals' && (
+        <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-500">
+          <div className="flex justify-between items-end mb-6">
+            <div className="flex flex-col space-y-2">
+              <h2 className="text-3xl font-bold text-white tracking-tight">Governance Proposals</h2>
+              <p className="text-slate-400">View active proposals, create new ones, and track governance.</p>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Vote & Lookup column */}
-            <div className="space-y-6">
-              <Vote {...sharedProps} />
-              <ProposalInfo {...sharedProps} />
+            {/* All Proposals List */}
+            <div className="lg:col-span-2">
+              <AllProposals {...sharedProps} />
             </div>
 
-            {/* Register Proposal - Center/Large */}
-            <div className="lg:col-span-2 h-full">
+            {/* Create Proposal */}
+            <div className="space-y-6">
               <RegisterProposal {...sharedProps} />
             </div>
           </div>
