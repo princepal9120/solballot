@@ -15,6 +15,10 @@ export default {
                     teal: '#14b8a6',     // Teal 500 - Success
                     amber: '#f59e0b',    // Amber 500 - Warning
                     red: '#ef4444',      // Red 500 - Error
+                    solana: {
+                        green: '#14F195',
+                        purple: '#9945FF',
+                    }
                 }
             },
             fontFamily: {

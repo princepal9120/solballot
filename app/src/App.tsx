@@ -30,11 +30,12 @@ import TokenBalance from './components/TokenBalance';
 // @ts-ignore
 import VoterInfo from './components/VoterInfo';
 // @ts-ignore
-import ProposalInfo from './components/ProposalInfo';
-// @ts-ignore
 import AllProposals from './components/AllProposals';
 // @ts-ignore
+import ProposalInfo from './components/ProposalInfo';
+// @ts-ignore
 import TreasuryInfo from './components/TreasuryInfo';
+import { LandingPage } from './components/LandingPage';
 
 import './App.css';
 
@@ -97,6 +98,15 @@ function App() {
     connection,
   }
 
+  if (!walletAddress) {
+    return (
+      <LandingPage
+        connectWallet={connectWallet}
+        isLoading={loading}
+      />
+    );
+  }
+
   return (
     <Layout
       currentPage={currentPage}
@@ -105,6 +115,7 @@ function App() {
       connectWallet={connectWallet}
       isLoadingWallet={loading}
     >
+      {/* ... (rest of the dashboard logic) */}
       {currentPage === 'user' && (
         <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-500">
           {/* Top Row: Stats & Quick Actions */}
