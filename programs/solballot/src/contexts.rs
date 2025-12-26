@@ -36,3 +36,29 @@ pub struct InitializeTreasury<'info> {
     pub associated_token_program: Program<'info, AssociatedToken>,
     pub system_program: Program<'info, System>,
 }
+
+#[derive(Accounts)]
+pub struct BuyTokens<'info> {
+
+    #[account(seeds=[b"treasury_config"], bump)]
+    pub treasury_config_account: Account<'info, TreasuryConfig>,
+
+    /// CHECK: This is recieve to SOL tokens
+    #[account(mut, seeds=[b"sol_vault"], bump=treasury_config_account.bump)]
+    pub sol_vault: AccountInfo<'info>,
+
+    #[account(mut)]
+    pub treasury_token_account: Account<'info, TokenAccount>,
+     #[account(mut,seeds=[b"x_mint"], bump)]
+    pub x_mint: Account<'info, Mint>,
+    #[account(mut,constraint=buyer_token_account.owner==buyer.key(), constraint=buyer_token_account.mint==x_mint.key(),)]
+    pub buyer_token_account: Account<'info, TokenAccount>,
+    #[account(mut)]
+    pub buyer: Signer<'info>,
+
+    pub token_program: Program<'info, Token>,
+
+    pub system_program: Program<'info, System>
+
+
+}
