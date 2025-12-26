@@ -134,9 +134,9 @@ const BuyTokens = ({ walletAddress, idlWithAddress, getProvider, connection }: P
 
             {status && (
                 <p className={cn(
-                    "text-sm font-medium p-2 rounded text-center animate-in fade-in transition-all",
-                    status.includes('✅') ? "text-green-400 bg-green-400/10" :
-                        status.includes('❌') ? "text-red-400 bg-red-400/10" : "text-gray-400 bg-gray-500/10"
+                    "text-sm font-medium p-2 rounded text-center animate-in fade-in transition-all border",
+                    status.includes('✅') ? "text-solana-cyan bg-solana-cyan/10 border-solana-cyan/20" :
+                        status.includes('❌') ? "text-solana-red bg-solana-red/10 border-solana-red/20" : "text-gray-400 bg-gray-500/10 border-gray-500/20"
                 )}>
                     {status}
                 </p>

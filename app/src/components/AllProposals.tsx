@@ -110,15 +110,15 @@ const AllProposals = ({ walletAddress, idlWithAddress, getProvider }: ProgramPro
                     All Proposals
                 </h2>
 
-                <div className="flex items-center gap-2 bg-slate-900 p-1 rounded-lg border border-slate-800">
+                <div className="flex items-center gap-2 bg-solana-dark p-1 rounded-lg border border-solana-surface">
                     {(['active', 'ended', 'all'] as const).map((f) => (
                         <button
                             key={f}
                             className={cn(
                                 "px-3 py-1.5 rounded-md text-sm font-medium transition-all",
                                 filter === f
-                                    ? "bg-slate-800 text-white shadow-sm border border-slate-700"
-                                    : "text-slate-500 hover:text-slate-300 hover:bg-slate-800/50"
+                                    ? "bg-solana-surface text-white shadow-sm border border-solana-purple/30"
+                                    : "text-gray-500 hover:text-gray-300 hover:bg-solana-surface/50"
                             )}
                             onClick={() => setFilter(f)}
                         >
@@ -130,7 +130,7 @@ const AllProposals = ({ walletAddress, idlWithAddress, getProvider }: ProgramPro
                 </div>
 
                 <Button size="sm" variant="ghost" onClick={fetchAllProposals} isLoading={loading}>
-                    <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
+                    <RefreshCw className={cn("w-4 h-4 text-gray-400", loading && "animate-spin")} />
                 </Button>
             </div>
 
@@ -168,14 +168,14 @@ const AllProposals = ({ walletAddress, idlWithAddress, getProvider }: ProgramPro
 
                         <div className="relative z-10">
                             <div className="flex justify-between items-start mb-4">
-                                <span className="text-xs font-mono text-slate-500 py-1">
+                                <span className="text-xs font-mono text-gray-500 py-1">
                                     #{proposal.id.toString().padStart(4, '0')}
                                 </span>
                                 <span className={cn(
                                     "text-xs font-bold px-2 py-1 rounded-md border tracking-wide",
                                     proposal.isActive
-                                        ? "bg-protocol-blue/10 text-protocol-blue border-protocol-blue/20"
-                                        : "bg-slate-800 text-slate-400 border-slate-700"
+                                        ? "bg-solana-green/10 text-solana-green border-solana-green/20 shadow-[0_0_8px_-3px_rgba(20,241,149,0.3)]"
+                                        : "bg-solana-surface text-gray-500 border-gray-700"
                                 )}>
                                     {proposal.isActive ? 'ACTIVE' : 'ENDED'}
                                 </span>

@@ -59,7 +59,7 @@ const VoterInfo = ({ walletAddress }: { walletAddress: string | null; idlWithAdd
             <div className="flex-1 flex flex-col justify-center items-center py-2">
                 {isRegistered ? ( // Changed from voterData to isRegistered for the badge logic
                     <div className="flex flex-col items-center gap-2">
-                        <span className="bg-protocol-teal/20 text-protocol-teal text-xs font-bold px-3 py-1 rounded-full border border-protocol-teal/30 flex items-center gap-1">
+                        <span className="bg-solana-cyan/10 text-solana-cyan text-xs font-bold px-3 py-1 rounded-full border border-solana-cyan/20 flex items-center gap-1 shadow-[0_0_10px_-3px_rgba(20,241,149,0.3)]">
                             <CheckCircle2 className="w-3 h-3" />
                             Registered
                         </span>
@@ -76,7 +76,7 @@ const VoterInfo = ({ walletAddress }: { walletAddress: string | null; idlWithAdd
                         </div>
                     </div>
                 ) : (
-                    <span className="bg-amber-500/10 text-amber-500 text-xs font-bold px-3 py-1 rounded-full border border-amber-500/20 flex items-center gap-1">
+                    <span className="bg-solana-amber/10 text-solana-amber text-xs font-bold px-3 py-1 rounded-full border border-solana-amber/20 flex items-center gap-1">
                         <AlertCircle className="w-3 h-3" />
                         Not Registered
                     </span>
@@ -84,12 +84,12 @@ const VoterInfo = ({ walletAddress }: { walletAddress: string | null; idlWithAdd
             </div>
 
             <Button
-                variant="secondary"
-                className="w-full mt-4 bg-protocol-blue/20 hover:bg-protocol-blue/30 text-protocol-blue border-transparent"
+                variant="ghost"
+                className="w-full mt-4 text-solana-purple hover:bg-solana-purple/5 hover:text-purple-400"
                 onClick={fetchVoterInfo}
                 isLoading={loading}
             >
-                Refresh
+                Refresh Status
             </Button>
         </Card>
     )

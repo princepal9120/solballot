@@ -95,29 +95,33 @@ const ProposalInfo = ({ walletAddress, idlWithAddress, getProvider }: ProgramPro
             {error && <p className="text-red-400 text-sm bg-red-400/10 p-3 rounded-lg border border-red-400/20">{error}</p>}
 
             {proposalData && (
-                <div className="bg-black/20 rounded-lg p-4 border border-white/5 space-y-3 animate-in fade-in zoom-in-95 duration-200">
+                <div className="bg-solana-surface/80 rounded-lg p-5 border border-solana-purple/20 space-y-4 animate-in fade-in zoom-in-95 duration-200">
                     <div className="flex justify-between items-start">
-                        <span className="text-xs font-mono bg-white/10 px-2 py-1 rounded text-gray-300">#{proposalData.proposalId}</span>
+                        <span className="text-xs font-mono bg-solana-base px-2 py-1 rounded text-solana-purple border border-solana-purple/20">#{proposalData.proposalId}</span>
                         <span className="text-xs text-gray-500 font-mono" title={proposalData.authority.toBase58()}>
                             Auth: {proposalData.authority.toBase58().slice(0, 4)}...
                         </span>
                     </div>
 
-                    <p className="font-medium text-lg text-white">{proposalData.proposalInfo}</p>
+                    <p className="font-medium text-lg text-white leading-relaxed">{proposalData.proposalInfo}</p>
 
                     <div className="grid grid-cols-2 gap-3 pt-2">
-                        <div className="bg-black/40 p-2 rounded flex items-center gap-2">
-                            <Users className="w-4 h-4 text-solana-purple" />
+                        <div className="bg-solana-base p-3 rounded-lg border border-white/5 flex items-center gap-3">
+                            <div className="bg-solana-purple/10 p-1.5 rounded-md">
+                                <Users className="w-4 h-4 text-solana-purple" />
+                            </div>
                             <div>
-                                <span className="text-xs text-gray-400 block">Votes</span>
-                                <span className="font-bold">{proposalData.numberOfVotes}</span>
+                                <span className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold block">Votes</span>
+                                <span className="font-bold font-mono text-white">{proposalData.numberOfVotes}</span>
                             </div>
                         </div>
-                        <div className="bg-black/40 p-2 rounded flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-solana-green" />
+                        <div className="bg-solana-base p-3 rounded-lg border border-white/5 flex items-center gap-3">
+                            <div className="bg-solana-green/10 p-1.5 rounded-md">
+                                <Clock className="w-4 h-4 text-solana-green" />
+                            </div>
                             <div>
-                                <span className="text-xs text-gray-400 block">Deadline</span>
-                                <span className="text-[10px] font-mono leading-tight">{formatDeadline(proposalData.deadline)}</span>
+                                <span className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold block">Deadline</span>
+                                <span className="text-[10px] font-mono leading-tight text-white">{formatDeadline(proposalData.deadline)}</span>
                             </div>
                         </div>
                     </div>

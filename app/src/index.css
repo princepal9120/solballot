@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
+@config "../tailwind.config.ts";
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-50 font-sans antialiased;
+    @apply bg-solana-base text-gray-50 font-sans antialiased;
     min-height: 100vh;
+  }
+
+  ::selection {
+    @apply bg-solana-purple/30 text-white;
   }
 }
 

@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 export default {
     content: [
@@ -8,21 +8,29 @@ export default {
     theme: {
         extend: {
             colors: {
-                protocol: {
-                    navy: '#020617',    // Slate 950 - Deep background
-                    charcoal: '#0f172a', // Slate 900 - Card background
-                    blue: '#3b82f6',     // Blue 500 - Primary Action (Electric Blue-ish)
-                    teal: '#14b8a6',     // Teal 500 - Success
-                    amber: '#f59e0b',    // Amber 500 - Warning
-                    red: '#ef4444',      // Red 500 - Error
-                    solana: {
-                        green: '#14F195',
-                        purple: '#9945FF',
-                    }
+                solana: {
+                    base: '#0a0a0f',     // Deepest background
+                    surface: '#111827',  // Card background
+                    purple: '#9945FF',   // Primary Action
+                    cyan: '#14F195',     // Success
+                    green: '#14F195',    // Alias for cyan/green
+                    amber: '#FFA500',    // Warning
+                    red: '#EF4444',      // Error
+                    gray: '#6b7280',     // Secondary text
+                    dark: '#0a0a0f',     // Alias for base
+                },
+                protocol: { // keeping existing mapped to new for backward compat if needed, or just replace usage later
+                    navy: '#0a0a0f',
+                    charcoal: '#111827',
+                    blue: '#9945FF',     // Mapping old blue to new purple for primary actions
+                    teal: '#14F195',
+                    amber: '#FFA500',
+                    red: '#EF4444',
                 }
             },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],
+                mono: ['JetBrains Mono', 'monospace'],
             }
         },
     },

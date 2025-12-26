@@ -70,10 +70,16 @@ const TokenBalance = ({ walletAddress, idlWithAddress, getProvider, connection }
             </div>
 
             <div className="flex-1 flex flex-col justify-center items-center py-2 relative z-10">
-                <p className="text-3xl font-bold text-white tracking-tight">
-                    {balance !== null ? balance.toFixed(2) : '---'}
-                </p>
-                <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-semibold">Votes Available</p>
+                <div className="relative">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-solana-purple to-solana-cyan rounded-lg blur opacity-20"></div>
+                    <p className="relative text-4xl font-mono font-bold text-white tracking-tighter">
+                        {balance !== null ? balance.toFixed(4) : '---'} <span className="text-sm font-sans font-normal text-gray-400">SOL</span>
+                    </p>
+                </div>
+                <div className="mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-solana-surface border border-slate-800">
+                    <span className="w-2 h-2 rounded-full bg-solana-cyan animate-pulse"></span>
+                    <p className="text-xs text-gray-400 font-mono">250 TOKENS AVAILABLE</p>
+                </div>
             </div>
         </Card>
     )

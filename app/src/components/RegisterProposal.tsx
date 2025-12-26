@@ -11,9 +11,14 @@ import toast from 'react-hot-toast';
 
 const RegisterProposal = ({ walletAddress, idlWithAddress, getProvider }: ProgramProps) => {
     const [proposalDescription, setProposalDescription] = useState('');
-    const [deadline, setDeadline] = useState('');
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
     const [stakeAmount, setStakeAmount] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    // Get current date/time for validation
+    const now = new Date();
+    const minDate = now.toISOString().split('T')[0];
 
     // Convert tokens to raw amount (6 decimals)
     const tokensToRaw = (tokens: string) => {
@@ -77,7 +82,16 @@ const RegisterProposal = ({ walletAddress, idlWithAddress, getProvider }: Progra
                 provider.wallet.publicKey
             );
 
-            const deadlineTimestamp = Math.floor(new Date(deadline).getTime() / 1000);
+            const dateTimeString = `${date}T${time}`;
+            const deadlineDate = new Date(dateTimeString);
+            const deadlineTimestamp = Math.floor(deadlineDate.getTime() / 1000);
+
+            if (deadlineDate <= new Date()) {
+                toast.error("Deadline must be in the future");
+                setIsLoading(false);
+                return;
+            }
+
             const stakeRaw = tokensToRaw(stakeAmount);
 
             await program.methods.registerProposal(
@@ -100,7 +114,8 @@ const RegisterProposal = ({ walletAddress, idlWithAddress, getProvider }: Progra
 
             toast.success("Proposal Registered! ID: " + currentCount.toString());
             setProposalDescription('');
-            setDeadline('');
+            setDate('');
+            setTime('');
             setStakeAmount('');
 
             await program.methods.registerProposal(
@@ -136,8 +151,8 @@ const RegisterProposal = ({ walletAddress, idlWithAddress, getProvider }: Progra
     return (
         <Card className="flex flex-col gap-4">
             <div className="flex items-center gap-2 border-b border-white/5 pb-4">
-                <FileText className="w-5 h-5 text-solana-green" />
-                <h2 className="text-xl font-bold">Register Proposal</h2>
+                <FileText className="w-5 h-5 text-solana-purple" />
+                <h2 className="text-xl font-bold tracking-tight">Register Proposal</h2>
             </div>
 
             <form onSubmit={(e) => {
@@ -158,16 +173,33 @@ const RegisterProposal = ({ walletAddress, idlWithAddress, getProvider }: Progra
                     </div>
                 </div>
 
-                <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-400">Deadline</label>
-                    <div className="relative">
-                        <Input
-                            type="datetime-local"
-                            value={deadline}
-                            onChange={(e) => setDeadline(e.target.value)}
-                            className="bg-white/5 border-white/10 text-white pl-8"
-                        />
-                        <Calendar className="absolute left-3 top-2.5 w-4 h-4 text-gray-500" />
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-400">Date</label>
+                        <div className="relative">
+                            <Input
+                                type="date"
+                                min={minDate}
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                className="bg-solana-surface/50 border-white/10 text-white pl-10 cursor-pointer"
+                            />
+                            <Calendar className="absolute left-3 top-2.5 w-4 h-4 text-solana-purple pointer-events-none" />
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-400">Time</label>
+                        <div className="relative">
+                            <Input
+                                type="time"
+                                value={time}
+                                onChange={(e) => setTime(e.target.value)}
+                                className="bg-solana-surface/50 border-white/10 text-white pl-10 cursor-pointer"
+                            />
+                            <div className="absolute left-3 top-2.5 w-4 h-4 text-solana-green pointer-events-none flex items-center justify-center font-bold text-[10px]">
+                                AM
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -188,9 +220,10 @@ const RegisterProposal = ({ walletAddress, idlWithAddress, getProvider }: Progra
 
                 <Button
                     type="submit"
-                    className="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium border border-slate-700"
+                    variant="primary"
+                    className="w-full font-bold shadow-lg shadow-solana-purple/20"
                     isLoading={isLoading}
-                    disabled={!proposalDescription || !deadline || !stakeAmount}
+                    disabled={!proposalDescription || !date || !time || !stakeAmount}
                 >
                     Register Proposal
                 </Button>

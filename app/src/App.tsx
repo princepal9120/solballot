@@ -1,43 +1,36 @@
-import { useState } from 'react';
+import { useState } from "react";
 import idl from "./idl/idl.json";
 import { Connection, PublicKey } from "@solana/web3.js";
 import * as anchor from "@coral-xyz/anchor";
-import { Layout } from './layout/Layout';
-import { Card } from './components/ui/Card';
-import { Button } from './components/ui/Button';
+import { Layout } from "./layout/Layout";
+import { Card } from "./components/ui/Card";
+import { Button } from "./components/ui/Button";
 
 // Component Imports (We will migrate these next, so suppressing errors for now if they are still JSX)
-// @ts-ignore
-import InitializeTreasury from './components/InitializeTreasury';
-// @ts-ignore
-import BuyTokens from './components/BuyTokens';
-// @ts-ignore
-import RegisterVoter from './components/RegisterVoter';
-// @ts-ignore
-import RegisterProposal from './components/RegisterProposal';
-// @ts-ignore
-import Vote from './components/Vote';
-// @ts-ignore
-import PickWinner from './components/PickWinner';
-// @ts-ignore
-import WithdrawSol from './components/WithdrawSol';
-// @ts-ignore
-import CloseProposal from './components/CloseProposal';
-// @ts-ignore
-import CloseVoter from './components/CloseVoter';
-// @ts-ignore
-import TokenBalance from './components/TokenBalance';
-// @ts-ignore
-import VoterInfo from './components/VoterInfo';
-// @ts-ignore
-import AllProposals from './components/AllProposals';
-// @ts-ignore
-import ProposalInfo from './components/ProposalInfo';
-// @ts-ignore
-import TreasuryInfo from './components/TreasuryInfo';
-import { LandingPage } from './components/LandingPage';
 
-import './App.css';
+import InitializeTreasury from "./components/InitializeTreasury";
+
+import BuyTokens from "./components/BuyTokens";
+
+import RegisterProposal from "./components/RegisterProposal";
+
+import Vote from "./components/Vote";
+import PickWinner from "./components/PickWinner";
+import WithdrawSol from "./components/WithdrawSol";
+import CloseProposal from "./components/CloseProposal";
+
+import TokenBalance from "./components/TokenBalance";
+
+import VoterInfo from "./components/VoterInfo";
+
+import AllProposals from "./components/AllProposals";
+
+import ProposalInfo from "./components/ProposalInfo";
+
+import TreasuryInfo from "./components/TreasuryInfo";
+import { LandingPage } from "./components/LandingPage";
+
+import "./App.css";
 
 const programID = new PublicKey("GDBsWYr5VuhAADd9NwvDu7Q2Ri35qWaaenVVwYy81JdC");
 const idlWithAddress = { ...idl, address: programID.toBase58() };
@@ -62,9 +55,10 @@ const getProvider = (): anchor.AnchorProvider | null => {
 function App() {
   const [loading, setLoading] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<'user' | 'admin' | 'settings' | 'proposals'>('user');
+  const [currentPage, setCurrentPage] = useState<
+    "user" | "admin" | "settings" | "proposals"
+  >("user");
 
   // Connect Wallet
   const connectWallet = async () => {
@@ -96,15 +90,10 @@ function App() {
   const sharedPropsWithConn = {
     ...sharedProps,
     connection,
-  }
+  };
 
   if (!walletAddress) {
-    return (
-      <LandingPage
-        connectWallet={connectWallet}
-        isLoading={loading}
-      />
-    );
+    return <LandingPage connectWallet={connectWallet} isLoading={loading} />;
   }
 
   return (
@@ -116,7 +105,7 @@ function App() {
       isLoadingWallet={loading}
     >
       {/* ... (rest of the dashboard logic) */}
-      {currentPage === 'user' && (
+      {currentPage === "user" && (
         <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-500">
           {/* Top Row: Stats & Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -124,11 +113,19 @@ function App() {
             <VoterInfo {...sharedProps} />
             <Card className="flex flex-col justify-between border-slate-800 bg-slate-900/50">
               <div className="flex flex-col gap-2">
-                <h3 className="text-gray-400 font-medium text-sm">Action Center</h3>
-                <p className="text-xs text-slate-500">Quickly access key actions</p>
+                <h3 className="text-gray-400 font-medium text-sm">
+                  Action Center
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Quickly access key actions
+                </p>
               </div>
               <div className="flex-1 flex flex-col justify-end gap-2 mt-4">
-                <Button size="sm" onClick={() => setCurrentPage('proposals')} className="w-full bg-slate-800 hover:bg-slate-700">
+                <Button
+                  size="sm"
+                  onClick={() => setCurrentPage("proposals")}
+                  className="w-full bg-slate-800 hover:bg-slate-700"
+                >
                   View Proposals
                 </Button>
               </div>
@@ -140,8 +137,12 @@ function App() {
             {/* Vote & Lookup column */}
             <div className="lg:col-span-2 space-y-6">
               <div className="flex flex-col space-y-2 mb-2">
-                <h2 className="text-2xl font-bold text-white tracking-tight">Cast Your Vote</h2>
-                <p className="text-slate-400 text-sm">Enter a Proposal ID to cast your vote directly.</p>
+                <h2 className="text-2xl font-bold text-white tracking-tight">
+                  Cast Your Vote
+                </h2>
+                <p className="text-slate-400 text-sm">
+                  Enter a Proposal ID to cast your vote directly.
+                </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Vote {...sharedProps} />
@@ -157,12 +158,16 @@ function App() {
         </div>
       )}
 
-      {currentPage === 'proposals' && (
+      {currentPage === "proposals" && (
         <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-500">
           <div className="flex justify-between items-end mb-6">
             <div className="flex flex-col space-y-2">
-              <h2 className="text-3xl font-bold text-white tracking-tight">Governance Proposals</h2>
-              <p className="text-slate-400">View active proposals, create new ones, and track governance.</p>
+              <h2 className="text-3xl font-bold text-white tracking-tight">
+                Governance Proposals
+              </h2>
+              <p className="text-slate-400">
+                View active proposals, create new ones, and track governance.
+              </p>
             </div>
           </div>
 
@@ -180,11 +185,15 @@ function App() {
         </div>
       )}
 
-      {currentPage === 'admin' && (
+      {currentPage === "admin" && (
         <div className="space-y-6 max-w-5xl mx-auto animate-in fade-in duration-500">
           <div className="flex flex-col space-y-2 mb-8">
-            <h2 className="text-3xl font-bold text-white tracking-tight">Treasury Management</h2>
-            <p className="text-slate-400">Initialize and manage the DAO treasury.</p>
+            <h2 className="text-3xl font-bold text-white tracking-tight">
+              Treasury Management
+            </h2>
+            <p className="text-slate-400">
+              Initialize and manage the DAO treasury.
+            </p>
           </div>
 
           <TreasuryInfo {...sharedProps} />
@@ -196,21 +205,29 @@ function App() {
         </div>
       )}
 
-      {currentPage === 'settings' && (
+      {currentPage === "settings" && (
         <div className="space-y-6 max-w-5xl mx-auto animate-in fade-in duration-500">
           <div className="flex flex-col space-y-2 mb-8">
-            <h2 className="text-3xl font-bold text-white tracking-tight">Settings & Tools</h2>
-            <p className="text-slate-400">Manage your account and perform advanced proposal actions.</p>
+            <h2 className="text-3xl font-bold text-white tracking-tight">
+              Settings & Tools
+            </h2>
+            <p className="text-slate-400">
+              Manage your account and perform advanced proposal actions.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-6">
-              <h3 className="text-xl font-semibold text-slate-200 border-b border-slate-800 pb-2">Account Management</h3>
+              <h3 className="text-xl font-semibold text-slate-200 border-b border-slate-800 pb-2">
+                Account Management
+              </h3>
               <CloseVoter {...sharedProps} />
             </div>
 
             <div className="space-y-6">
-              <h3 className="text-xl font-semibold text-slate-200 border-b border-slate-800 pb-2">Proposal Administration</h3>
+              <h3 className="text-xl font-semibold text-slate-200 border-b border-slate-800 pb-2">
+                Proposal Administration
+              </h3>
               <CloseProposal {...sharedProps} />
               <PickWinner {...sharedProps} />
             </div>
@@ -218,7 +235,7 @@ function App() {
         </div>
       )}
     </Layout>
-  )
+  );
 }
 
 export default App;

@@ -39,12 +39,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ connectWallet, isLoadi
 
             {/* Navigation (Simple version for landing) */}
             <nav className="relative z-10 px-8 py-6 flex justify-between items-center max-w-7xl mx-auto">
-                <div className="flex items-center gap-2">
-                    <div className="bg-gradient-to-br from-solana-purple to-solana-green p-2 rounded-lg">
-                        <BarChart3 className="w-6 h-6 text-white" />
-                    </div>
-                    <span className="text-xl font-bold tracking-tight">SolBallot</span>
+                <div className="flex items-center gap-3">
+                    <img src="/logo.png" alt="SolBallot" className="w-10 h-10 object-contain" />
+                    <span className="text-xl font-bold tracking-tight text-slate-100">SolBallot</span>
                 </div>
+
                 <Button
                     onClick={connectWallet}
                     isLoading={isLoading}
@@ -170,20 +169,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ connectWallet, isLoadi
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="relative z-10 px-8 py-12 border-t border-slate-900 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-                <div className="flex items-center gap-2 grayscale group hover:grayscale-0 transition-all">
-                    <BarChart3 className="w-5 h-5 text-solana-purple" />
-                    <span className="font-bold text-slate-500 group-hover:text-slate-200 transition-colors">SolBallot Protocol</span>
-                </div>
-                <div className="flex gap-8 text-sm text-slate-500">
-                    <a href="#" className="hover:text-solana-green transition-colors">Documentation</a>
-                    <a href="#" className="hover:text-solana-green transition-colors">GitHub</a>
-                    <a href="#" className="hover:text-solana-green transition-colors">X / Twitter</a>
-                </div>
-                <p className="text-xs text-slate-600">
-                    &copy; 2025 SolBallot. Built on Solana.
-                </p>
+            <footer className="py-8 text-center text-slate-500 text-sm relative z-10">
+                <p>&copy; 2025 SolBallot. Built on Solana.</p>
             </footer>
         </div>
     );

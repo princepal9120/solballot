@@ -93,10 +93,10 @@ const Vote = ({ walletAddress, idlWithAddress, getProvider }: ProgramProps) => {
     }
 
     return (
-        <Card className="flex flex-col gap-4">
+        <Card className="flex flex-col gap-4 border-solana-purple/20 shadow-lg shadow-solana-purple/5">
             <div className="flex items-center gap-2 border-b border-white/5 pb-4">
                 <VoteIcon className="w-5 h-5 text-solana-purple" />
-                <h2 className="text-xl font-bold">Cast Vote</h2>
+                <h2 className="text-xl font-bold tracking-tight">Cast Vote</h2>
             </div>
 
             <form onSubmit={(e) => {
@@ -129,7 +129,8 @@ const Vote = ({ walletAddress, idlWithAddress, getProvider }: ProgramProps) => {
 
                 <Button
                     type="submit"
-                    className="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-sm"
+                    variant="primary"
+                    className="w-full font-bold shadow-solana-purple/20"
                     isLoading={isLoading}
                     disabled={!proposalId || !amount}
                 >
