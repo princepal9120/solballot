@@ -52,25 +52,7 @@ export default function Globe3D({ onConnect }: Globe3DProps) {
                         >
                             Connect Wallet
                         </button>
-                        <a
-                            href="#"
-                            className="flex w-full items-center justify-center gap-2 text-white/70 transition-colors hover:text-white sm:w-auto"
-                        >
-                            <span>View Demo</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <path d="m6 9 6 6 6-6"></path>
-                            </svg>
-                        </a>
+                    
                     </div>
                 </motion.div>
                 <motion.div
@@ -79,17 +61,10 @@ export default function Globe3D({ onConnect }: Globe3DProps) {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
                 >
-                    <div className="w-full flex h-40 md:h-64 relative overflow-hidden">
+                    <div className="relative z-10 mx-auto max-w-5xl overflow-hidden rounded-lg shadow-[0_0_50px_rgba(155,135,245,0.2)] mt-15">
                         <img
-                            src="https://blocks.mvp-subha.me/assets/earth.png"
-                            alt="Earth"
-                            className="absolute px-4 top-0 left-1/2 -translate-x-1/2 mx-auto -z-10 opacity-80"
-                        />
-                    </div>
-                    <div className="relative z-10 mx-auto max-w-5xl overflow-hidden rounded-lg shadow-[0_0_50px_rgba(155,135,245,0.2)]">
-                        <img
-                            src="https://blocks.mvp-subha.me/assets/lunexa-db.png"
-                            alt="Lunexa Dashboard"
+                            src="/dashboard.png"
+                            alt="Dashboard"
                             width={1920}
                             height={1080}
                             className="h-auto w-full rounded-lg border border-white/10"

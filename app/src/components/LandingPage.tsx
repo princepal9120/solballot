@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from './ui/Button';
 import Globe3D from './blocks/hero';
-import { Features } from './blocks/features-8';
+import { Features } from './blocks/features';
 
 interface LandingPageProps {
     connectWallet: () => void;
