@@ -206,53 +206,56 @@ interface ProposalTableProps {
 }
 
 const ProposalTable: React.FC<ProposalTableProps> = ({ proposals, getStatusBadge, onVote }) => (
-    <Table>
-        <TableHeader>
-            <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Votes</TableHead>
-                <TableHead>Actions</TableHead>
-            </TableRow>
-        </TableHeader>
-        <TableBody>
-            {proposals.map((proposal) => (
-                <TableRow key={proposal.id}>
-                    <TableCell className="font-mono">#{proposal.id}</TableCell>
-                    <TableCell className="font-medium">{proposal.title}</TableCell>
-                    <TableCell>{getStatusBadge(proposal.status)}</TableCell>
-                    <TableCell>
-                        <div className="flex items-center gap-2 text-sm">
-                            <span className="text-green-400">{proposal.votes.yes} Yes</span>
-                            <span className="text-slate-500">/</span>
-                            <span className="text-red-400">{proposal.votes.no} No</span>
-                        </div>
-                    </TableCell>
-                    <TableCell>
-                        {proposal.status === 'active' && onVote && (
-                            <div className="flex gap-2">
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={() => onVote(proposal.id, true)}
-                                >
-                                    <CheckCircle className="w-3 h-3 mr-1" />
-                                    Yes
-                                </Button>
-                                <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => onVote(proposal.id, false)}
-                                >
-                                    <XCircle className="w-3 h-3 mr-1" />
-                                    No
-                                </Button>
-                            </div>
-                        )}
-                    </TableCell>
+    <div className="overflow-x-auto rounded-xl border border-white/10">
+        <Table className="min-w-[800px]">
+            <TableHeader>
+                <TableRow>
+                    <TableHead>ID</TableHead>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Votes</TableHead>
+                    <TableHead>Actions</TableHead>
                 </TableRow>
-            ))}
-        </TableBody>
-    </Table>
+            </TableHeader>
+            <TableBody>
+                {proposals.map((proposal) => (
+                    <TableRow key={proposal.id}>
+                        <TableCell className="font-mono">#{proposal.id}</TableCell>
+                        <TableCell className="font-medium">{proposal.title}</TableCell>
+                        <TableCell>{getStatusBadge(proposal.status)}</TableCell>
+                        <TableCell>
+                            <div className="flex items-center gap-2 text-sm">
+                                <span className="text-green-400">{proposal.votes.yes} Yes</span>
+                                <span className="text-slate-500">/</span>
+                                <span className="text-red-400">{proposal.votes.no} No</span>
+                            </div>
+                        </TableCell>
+                        <TableCell>
+                            {proposal.status === 'active' && onVote && (
+                                <div className="flex gap-2">
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => onVote(proposal.id, true)}
+                                    >
+                                        <CheckCircle className="w-3 h-3 mr-1" />
+                                        Yes
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() => onVote(proposal.id, false)}
+                                        className="text-slate-400 hover:text-red-400 hover:bg-red-400/10"
+                                    >
+                                        <XCircle className="w-3 h-3 mr-1" />
+                                        No
+                                    </Button>
+                                </div>
+                            )}
+                        </TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+    </div>
 )
