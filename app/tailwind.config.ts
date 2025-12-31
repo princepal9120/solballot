@@ -9,15 +9,15 @@ export default {
         extend: {
             colors: {
                 solana: {
-                    base: '#0a0a0f',     // Deepest background
-                    surface: '#111827',  // Card background
-                    purple: '#9945FF',   // Primary Action
+                    base: '#0a0613',     // Deepest background (matches landing)
+                    surface: '#150d27',  // Card background (dark purple)
+                    purple: '#9b87f5',   // Primary Action (matches landing)
                     cyan: '#14F195',     // Success
                     green: '#14F195',    // Alias for cyan/green
                     amber: '#FFA500',    // Warning
                     red: '#EF4444',      // Error
                     gray: '#6b7280',     // Secondary text
-                    dark: '#0a0a0f',     // Alias for base
+                    dark: '#0a0613',     // Alias for base
                 },
                 protocol: { // keeping existing mapped to new for backward compat if needed, or just replace usage later
                     navy: '#0a0a0f',

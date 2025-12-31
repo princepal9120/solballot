@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import idl from "./idl/idl.json";
 import { Connection, PublicKey } from "@solana/web3.js";
 import * as anchor from "@coral-xyz/anchor";
@@ -31,6 +31,7 @@ import TreasuryInfo from "./components/TreasuryInfo";
 import { LandingPage } from "./components/LandingPage";
 
 import "./App.css";
+import CloseVoter from "./components/CloseVoter";
 
 const programID = new PublicKey("GDBsWYr5VuhAADd9NwvDu7Q2Ri35qWaaenVVwYy81JdC");
 const idlWithAddress = { ...idl, address: programID.toBase58() };
@@ -59,6 +60,22 @@ function App() {
   const [currentPage, setCurrentPage] = useState<
     "user" | "admin" | "settings" | "proposals"
   >("user");
+
+  // Eager connect on mount
+  useEffect(() => {
+    const tryEagerConnect = async () => {
+      try {
+        const { solana } = window as any;
+        if (solana && solana.isPhantom) {
+          const response = await solana.connect({ onlyIfTrusted: true });
+          setWalletAddress(response.publicKey.toString());
+        }
+      } catch (err) {
+        // User hasn't connected before, or rejected. Silent fail is expected.
+      }
+    };
+    tryEagerConnect();
+  }, []);
 
   // Connect Wallet
   const connectWallet = async () => {
@@ -106,17 +123,27 @@ function App() {
     >
       {/* ... (rest of the dashboard logic) */}
       {currentPage === "user" && (
-        <div className="space-y-6 max-w-7xl mx-auto animate-in fade-in duration-500">
+        <div className="space-y-8 max-w-7xl mx-auto animate-in fade-in duration-500">
+          {/* Section Header */}
+          <div className="flex flex-col space-y-2">
+            <h2 className="text-2xl font-bold text-white tracking-tight">
+              Dashboard
+            </h2>
+            <p className="text-slate-400 text-sm">
+              Welcome back! Here's an overview of your governance activity.
+            </p>
+          </div>
+
           {/* Top Row: Stats & Quick Actions */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <TokenBalance {...sharedPropsWithConn} />
             <VoterInfo {...sharedProps} />
-            <Card className="flex flex-col justify-between border-slate-800 bg-slate-900/50">
+            <Card className="flex flex-col justify-between p-6">
               <div className="flex flex-col gap-2">
-                <h3 className="text-gray-400 font-medium text-sm">
+                <h3 className="text-white font-medium text-sm">
                   Action Center
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   Quickly access key actions
                 </p>
               </div>
@@ -124,7 +151,7 @@ function App() {
                 <Button
                   size="sm"
                   onClick={() => setCurrentPage("proposals")}
-                  className="w-full bg-slate-800 hover:bg-slate-700"
+                  className="w-full bg-[#9b87f5] hover:bg-[#8a76e4] text-white"
                 >
                   View Proposals
                 </Button>
